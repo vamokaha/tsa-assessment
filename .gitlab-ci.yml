@@ -10,21 +10,22 @@ deploy_wordpress:
   before_script:
     - apk update && apk add git wget tar bash
   script:
-    # Clone your GitHub repo
-    - git clone https://github.com/vamokaha/tsa-assessment.git site-code
+    # Clone your GitLab repo
+    - git clone https://gitlab.com/vamokaha2-group/tsa-assessment.git site-code
     - cd site-code
 
-    # Download WordPress if not already included
+    # Download latest WordPress package
     - wget https://wordpress.org/latest.tar.gz
     - tar -xvzf latest.tar.gz
     - mv wordpress/* $DEPLOY_DIR/
     - rm -rf wordpress latest.tar.gz
 
-    # Copy custom repo files (themes, plugins, config)
+    # Copy custom repo files
     - cp -r * $DEPLOY_DIR/
 
-    # Set permissions
+    # Set directory/file permissions
     - chmod -R 755 $DEPLOY_DIR
     - chown -R www-data:www-data $DEPLOY_DIR
   only:
     - main
+
